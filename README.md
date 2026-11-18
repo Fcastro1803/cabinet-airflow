@@ -31,7 +31,9 @@ La vista es lateral, con el gabinete visto de costado.
 
 Debajo del dibujo se muestra un resumen: cantidad de entradas y salidas, tipo de presión, temperatura del CPU y la GPU, velocidad de los ventiladores de la GPU y temperatura del aire que sale.
 
-La configuración (ventiladores, tamaño, lado del frente y curva) se guarda en el navegador de cada persona.
+**Tema:** junto al título se elige **Claro**, **Oscuro** o **Sistema** (sigue al tema del sistema operativo). El cambio se anima con un círculo de borde difuminado que crece desde el centro (View Transitions API); en navegadores sin esa función, o con "reducir movimiento" activado, cambia al instante.
+
+La configuración (ventiladores, tamaño, lado del frente, curva y tema) se guarda en el navegador de cada persona.
 
 ## Cómo funciona el modelo
 

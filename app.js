@@ -588,3 +588,33 @@ function drawCurve(){
 
 function loop(){ update(); draw(); drawCurve(); requestAnimationFrame(loop); }
 loop();
+
+// ---- tema: Claro / Oscuro / Sistema ----
+// El tema guardado ya lo aplica un script en <head> antes de pintar; acá solo se maneja el selector.
+// Los canvas leen los colores del tema en cada cuadro, así que no hace falta redibujar nada.
+{
+  const THEME_KEY = 'flujo-gabinete-tema';
+  const root = document.documentElement;
+  const btns = [...document.querySelectorAll('[data-theme-opt]')];
+  const sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const current = () => root.dataset.theme || 'system';
+  const isDark = opt => opt === 'dark' || (opt === 'system' && sysDark.matches);
+  const mark = () => btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.themeOpt === current())));
+  function apply(opt){
+    if(opt === 'system') delete root.dataset.theme; else root.dataset.theme = opt;
+    try{ opt === 'system' ? localStorage.removeItem(THEME_KEY) : localStorage.setItem(THEME_KEY, opt); }catch(e){}
+    mark();
+  }
+  btns.forEach(b => b.addEventListener('click', () => {
+    const opt = b.dataset.themeOpt;
+    if(opt === current()) return;
+    // anima solo si cambia lo que se ve, el navegador lo soporta y no se pidió reducir movimiento
+    const animate = isDark(opt) !== isDark(current()) && document.startViewTransition && !reduce.matches;
+    if(!animate){ apply(opt); return; }
+    // si se toca otro botón durante la animación, el navegador cancela la anterior: no es un error
+    const t = document.startViewTransition(() => apply(opt));
+    t.ready.catch(() => {}); t.finished.catch(() => {});
+  }));
+  mark();
+}

@@ -1,5 +1,9 @@
-  :root { --bg:#0f1318; --panel:#171d25; --ink:#e6ebf1; --mute:#8a96a5; --line:#2a3340; --btn:#232b36; }
-  @media (prefers-color-scheme: light) { :root { --bg:#f3f5f8; --panel:#ffffff; --ink:#1a2330; --mute:#5b6675; --line:#d5dbe3; --btn:#e8ecf1; } }
+  /* Tema: oscuro por defecto; sin data-theme sigue al sistema, con data-theme="light|dark" se fuerza */
+  :root { --bg:#0f1318; --panel:#171d25; --ink:#e6ebf1; --mute:#8a96a5; --line:#2a3340; --btn:#232b36; color-scheme:dark; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) { --bg:#f3f5f8; --panel:#ffffff; --ink:#1a2330; --mute:#5b6675; --line:#d5dbe3; --btn:#e8ecf1; color-scheme:light; }
+  }
+  :root[data-theme="light"] { --bg:#f3f5f8; --panel:#ffffff; --ink:#1a2330; --mute:#5b6675; --line:#d5dbe3; --btn:#e8ecf1; color-scheme:light; }
   * { box-sizing:border-box; }
   [hidden] { display:none !important; }
   body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.4 system-ui,sans-serif; padding:16px; }
@@ -29,3 +33,18 @@
   .footer a:hover { color:var(--ink); }
   .footer a:focus-visible { outline:2px solid #3aa0ff; outline-offset:2px; border-radius:2px; }
   .sw { display:inline-block; width:22px; height:8px; border-radius:4px; vertical-align:middle; margin-right:6px; }
+  /* Encabezado con selector de tema */
+  .head { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:space-between; margin-bottom:4px; }
+  .head h1 { margin:0; }
+  .theme { display:inline-flex; padding:2px; gap:2px; background:var(--btn); border:1px solid var(--line); border-radius:9px; }
+  .theme button { border:0; background:transparent; color:var(--mute); padding:4px 12px; font-size:13px; border-radius:7px; }
+  .theme button:hover { color:var(--ink); }
+  .theme button[aria-pressed="true"] { background:var(--panel); color:var(--ink); box-shadow:0 0 0 1px var(--line); }
+  /* Transición al cambiar de tema: círculo de borde difuminado que crece desde el centro (View Transitions API) */
+  @property --tr { syntax:'<length>'; inherits:false; initial-value:0px; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation:none; mix-blend-mode:normal; }
+  ::view-transition-new(root) {
+    mask:radial-gradient(circle at 50% 50%, #000 calc(var(--tr) * .75), transparent var(--tr));
+    animation:tema-revelar .9s cubic-bezier(.7,0,.3,1) both;
+  }
+  @keyframes tema-revelar { to { --tr:150vmax; } }

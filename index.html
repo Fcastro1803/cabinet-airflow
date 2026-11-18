@@ -4,12 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Flujo de aire del gabinete</title>
+<!-- Aplica el tema guardado antes de pintar, para que no parpadee el tema equivocado al cargar -->
+<script>try{const t=localStorage.getItem('flujo-gabinete-tema');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="wrap">
-  <h1>Flujo de aire del gabinete</h1>
+  <div class="head">
+    <h1>Flujo de aire del gabinete</h1>
+    <div class="theme" role="group" aria-label="Tema">
+      <button type="button" data-theme-opt="light" aria-pressed="false">Claro</button>
+      <button type="button" data-theme-opt="dark" aria-pressed="false">Oscuro</button>
+      <button type="button" data-theme-opt="system" aria-pressed="true">Sistema</button>
+    </div>
+  </div>
   <p class="sub">Vista lateral. La GPU (diseño abierto) calienta el aire y lo dispersa por sus laterales y extremos dentro del gabinete. Puedes elegir el modelo de GPU y CPU, cuántos ventiladores tiene la GPU y cómo se refrigera el CPU. El CPU y la GPU toman el color de su temperatura, con la misma escala que el aire.
     <b>Arrastra</b> un ventilador por las paredes para moverlo, <b>haz clic</b> para cambiar entre entrada y salida y <b>sácalo del gabinete</b> para eliminarlo.</p>
   <canvas id="c" width="900" height="560"></canvas>
