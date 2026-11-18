@@ -398,8 +398,19 @@ function update(){
   for(const f of [...fans, cpuPush, cpuPull, stockFan]) f.a += 0.25;
   for(const f of gpuFans) f.a += 0.35*gpuSpeed;
   const pres = ins.length > outs.length ? 'positiva' : ins.length < outs.length ? 'negativa' : 'neutra';
-  document.getElementById('stat').textContent =
-    `Entrada: ${ins.length} · Salida: ${outs.length} · Presión ${pres} · CPU ${chipLabel('cpu')} · GPU ${chipLabel('gpu')} (ventiladores ${Math.round(gpuSpeed*100)}%) · aire de salida ${degC(avg)} °C`;
+  // resumen como lista (dt/dd); solo se toca el DOM cuando algo cambió
+  const rows = [
+    ['Ventiladores de entrada', String(ins.length)],
+    ['Ventiladores de salida', String(outs.length)],
+    ['Presión', pres[0].toUpperCase() + pres.slice(1)],
+    ['CPU', chipLabel('cpu')],
+    ['GPU', chipLabel('gpu')],
+    ['Ventiladores GPU', `${Math.round(gpuSpeed*100)}%`],
+    ['Aire de salida', `${degC(avg)} °C`],
+  ];
+  const html = rows.map(([k, v]) => `<dt>${k}</dt><dd${v.includes('al límite') ? ' class="hot"' : ''}>${v}</dd>`).join('');
+  const statEl = document.getElementById('stat');
+  if(statEl.innerHTML !== html) statEl.innerHTML = html;
 }
 
 // Escala térmica azul → verde → amarillo → rojo. Se interpola el tono (HSL), no el RGB:
@@ -654,7 +665,7 @@ loop();
   const TRIES = {
     'sin-techo': {
       run(){ load(noTop()); save(); },
-      msg: 'Sin salidas en el techo: mirá cómo sube la temperatura del CPU en la línea de resumen y cómo el aire caliente se acumula arriba.',
+      msg: 'Sin salidas en el techo: mirá cómo sube la temperatura del CPU en el resumen y cómo el aire caliente se acumula arriba.',
     },
     'presion-negativa': {
       run(){ const d = defaultFans(); load([d[0], d[1], d[3], d[4], d[5]]); addFan('out'); document.getElementById('pcivent').checked = false; },

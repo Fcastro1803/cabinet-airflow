@@ -29,7 +29,7 @@ La vista es lateral, con el gabinete visto de costado.
 
 **Curva de ventiladores de la GPU:** 5 puntos arrastrables que indican a qué velocidad (%) giran los ventiladores según la temperatura de la GPU, como en las utilidades de las placas de video.
 
-Debajo del dibujo se muestra un resumen: cantidad de entradas y salidas, tipo de presión, temperatura del CPU y la GPU, velocidad de los ventiladores de la GPU y temperatura del aire que sale.
+Al costado del dibujo (debajo en pantallas angostas) se muestran un resumen y la leyenda. El resumen indica cantidad de entradas y salidas, tipo de presión, temperatura del CPU y la GPU, velocidad de los ventiladores de la GPU y temperatura del aire que sale.
 
 **Ayuda:** el botón «Ayuda» junto al título abre una guía con secciones: primeros pasos, ventiladores, gabinete y ambiente, GPU y su curva, CPU y refrigeración, cómo leer la simulación e ideas para probar.
 

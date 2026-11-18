@@ -24,8 +24,23 @@
   </div>
   <p class="sub">Vista lateral de un gabinete de PC: los puntos son el aire, que cambia de color según su temperatura. Acomodá los ventiladores, elegí tu GPU, tu CPU y su refrigeración, y mirá cómo cambian la presión y las temperaturas.
     ¿Primera vez? <button type="button" id="helpOpen2" class="link-btn">Abrí la ayuda</button> para ver cómo se usa.</p>
-  <p id="tryMsg" class="try-msg" role="status" hidden></p>
-  <canvas id="c" width="900" height="560"></canvas>
+  <!-- Gabinete a la izquierda y, al costado, el resumen y la leyenda (en pantallas angostas van debajo) -->
+  <div class="stage">
+    <canvas id="c" width="900" height="560"></canvas>
+    <aside class="side" aria-label="Resumen y leyenda">
+      <p id="tryMsg" class="try-msg" role="status" hidden></p>
+      <h2>Resumen</h2>
+      <dl class="stat" id="stat"></dl>
+      <div id="msg"></div>
+      <h2>Leyenda</h2>
+      <div class="legend">
+        <span class="scale"><span class="scale-row">22 °C <i class="bar"></i> 95 °C</span><span>Temperatura del aire y de los componentes</span></span>
+        <span><i class="sw" style="background:#3aa0ff"></i>Ventilador de entrada</span>
+        <span><i class="sw" style="background:#ff6a3a"></i>Ventilador de salida</span>
+      </div>
+      <p class="sub side-note">Los watts son el consumo aproximado de cada modelo a carga máxima. La líquida usa como radiador los ventiladores del techo (o los del frente si no hay en el techo).</p>
+    </aside>
+  </div>
   <div class="controls">
     <button id="addIn">+ Ventilador de entrada</button>
     <button id="addOut">+ Ventilador de salida</button>
@@ -82,14 +97,6 @@
     <p class="sub">Arrastrá los puntos: cada uno indica a qué velocidad (%) giran los ventiladores a esa temperatura. La línea punteada marca la temperatura actual de la GPU y el punto sobre esa línea, la velocidad real de los ventiladores.</p>
     <canvas id="curve" width="480" height="240" aria-label="Curva de velocidad de los ventiladores de la GPU según la temperatura"></canvas>
   </section>
-  <p class="sub">Los watts son el consumo aproximado de cada modelo a carga máxima. La líquida usa como radiador los ventiladores del techo (o los del frente si no hay en el techo).</p>
-  <div class="stat" id="stat"></div>
-  <div id="msg"></div>
-  <div class="legend">
-    <span class="scale">22 °C <i class="bar"></i> 95 °C <span>temperatura (aire y componentes)</span></span>
-    <span><i class="sw" style="background:#3aa0ff"></i>Ventilador de entrada</span>
-    <span><i class="sw" style="background:#ff6a3a"></i>Ventilador de salida</span>
-  </div>
   <footer class="footer">
     <p>Los valores son estimaciones de un modelo simplificado, pensadas para comparar configuraciones entre sí. No reemplazan mediciones reales.</p>
     <p>
@@ -112,7 +119,7 @@
     <ol>
       <li><b>Mové un ventilador:</b> agarralo con el mouse (o el dedo) y arrastralo por las paredes.</li>
       <li><b>Elegí tu GPU y tu CPU</b> en las listas de abajo, y cómo se refrigera el CPU.</li>
-      <li><b>Mirá la línea de resumen</b>, debajo de la curva: muestra la presión y las temperaturas, y se actualiza sola.</li>
+      <li><b>Mirá el resumen</b>, al costado del gabinete (debajo en el celular): muestra la presión y las temperaturas, y se actualiza solo.</li>
     </ol>
   </details>
 
@@ -183,7 +190,7 @@
 
   <details>
     <summary>Ideas para probar</summary>
-    <p>Cada botón parte de la configuración inicial (con tu GPU y tu CPU), cambia una sola cosa y te muestra qué mirar arriba del gabinete.</p>
+    <p>Cada botón parte de la configuración inicial (con tu GPU y tu CPU), cambia una sola cosa y te muestra qué mirar arriba del resumen.</p>
     <ul class="tries">
       <li><span><b>Sin salidas en el techo:</b> el aire caliente de la GPU se queda dando vueltas arriba, alrededor del CPU.</span> <button type="button" class="try" data-try="sin-techo">Probar</button></li>
       <li><span><b>Presión negativa:</b> más salidas que entradas, con las tapas PCI cerradas. Después abrilas y compará la GPU.</span> <button type="button" class="try" data-try="presion-negativa">Probar</button></li>
