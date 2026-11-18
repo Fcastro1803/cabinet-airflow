@@ -1,0 +1,26 @@
+  :root { --bg:#0f1318; --panel:#171d25; --ink:#e6ebf1; --mute:#8a96a5; --line:#2a3340; --btn:#232b36; }
+  @media (prefers-color-scheme: light) { :root { --bg:#f3f5f8; --panel:#ffffff; --ink:#1a2330; --mute:#5b6675; --line:#d5dbe3; --btn:#e8ecf1; } }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.4 system-ui,sans-serif; padding:16px; }
+  h1 { font-size:18px; margin:0 0 4px; }
+  p.sub { margin:0 0 12px; color:var(--mute); font-size:13px; }
+  .wrap { max-width:960px; margin:0 auto; }
+  canvas { width:100%; height:auto; background:var(--panel); border:1px solid var(--line); border-radius:10px; display:block; touch-action:none; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px 16px; margin:12px 0; align-items:center; }
+  label { display:flex; gap:6px; align-items:center; cursor:pointer; user-select:none; }
+  button { font:inherit; font-size:14px; color:var(--ink); background:var(--btn); border:1px solid var(--line); border-radius:8px; padding:6px 12px; cursor:pointer; }
+  button:hover { border-color:var(--mute); }
+  button:focus-visible { outline:2px solid #3aa0ff; outline-offset:2px; }
+  .stat { color:var(--mute); font-size:13px; font-variant-numeric:tabular-nums; }
+  #msg { color:#ff8a3a; font-size:13px; min-height:18px; }
+  select, input[type=number] { font:inherit; font-size:14px; color:var(--ink); background:var(--btn); border:1px solid var(--line); border-radius:8px; padding:5px 8px; }
+  input[type=number] { width:6.5em; }
+  .tag { min-width:4.5em; }
+  .curve { margin:16px 0 8px; max-width:480px; }
+  .curve-head { display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:4px; }
+  output { min-width:3.5em; font-variant-numeric:tabular-nums; }
+  .legend { display:flex; gap:16px; font-size:13px; color:var(--mute); flex-wrap:wrap; }
+  .scale { display:inline-flex; gap:6px; align-items:center; }
+  .bar { display:inline-block; width:140px; height:8px; border-radius:4px; background:linear-gradient(90deg, hsl(210,95%,55%), hsl(129,95%,55%), hsl(48,95%,55%), hsl(4,95%,55%)); }
+  .sw { display:inline-block; width:22px; height:8px; border-radius:4px; vertical-align:middle; margin-right:6px; }

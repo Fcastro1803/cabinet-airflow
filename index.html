@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flujo de aire del gabinete</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <h1>Flujo de aire del gabinete</h1>
+  <p class="sub">Vista lateral. La GPU (diseño abierto) calienta el aire y lo dispersa por sus laterales y extremos dentro del gabinete. Puedes elegir el modelo de GPU y CPU, cuántos ventiladores tiene la GPU y cómo se refrigera el CPU. El CPU y la GPU toman el color de su temperatura, con la misma escala que el aire.
+    <b>Arrastra</b> un ventilador por las paredes para moverlo, <b>haz clic</b> para cambiar entre entrada y salida y <b>sácalo del gabinete</b> para eliminarlo.</p>
+  <canvas id="c" width="900" height="560"></canvas>
+  <div class="controls">
+    <button id="addIn">+ Ventilador de entrada</button>
+    <button id="addOut">+ Ventilador de salida</button>
+    <button id="reset">Restablecer</button>
+    <button id="flip">Poner frente a la derecha</button>
+    <label for="ambient">Temperatura ambiente</label>
+    <input type="range" id="ambient" min="15" max="40" step="1" value="22"><output id="ambientv" for="ambient">22 °C</output>
+  </div>
+  <div class="controls">
+    <b class="tag">Gabinete</b>
+    <select id="casesize" aria-label="Tamaño del gabinete">
+      <option value="mini">Mini torre (micro-ATX)</option>
+      <option value="mid" selected>Media torre (ATX)</option>
+      <option value="full">Torre completa (E-ATX)</option>
+      <option value="custom">Personalizado</option>
+    </select>
+    <label><input type="checkbox" id="pcivent" checked> Tapas PCI traseras ventiladas</label>
+    <span id="customsize" class="controls" style="margin:0" hidden>
+      <label for="casew">Profundidad</label>
+      <input type="range" id="casew" min="620" max="800" step="10" value="740"><output id="casewv" for="casew">100%</output>
+      <label for="caseh">Altura</label>
+      <input type="range" id="caseh" min="440" max="500" step="10" value="440"><output id="casehv" for="caseh">100%</output>
+    </span>
+  </div>
+  <div class="controls">
+    <b class="tag">GPU</b>
+    <select id="gpumodel" aria-label="Modelo de GPU"></select>
+    <input type="number" id="gpuw" min="30" max="600" step="5" value="200" aria-label="Consumo de la GPU en watts" hidden>
+    <select id="gpufancount" aria-label="Ventiladores de la GPU">
+      <option value="1">1 ventilador</option><option value="2" selected>2 ventiladores</option><option value="3">3 ventiladores</option>
+    </select>
+    <label><input type="checkbox" id="gpufans" checked> Encendidos</label>
+    <label for="gpuload">Carga</label>
+    <input type="range" id="gpuload" min="0" max="100" step="5" value="100"><output id="gpuloadv" for="gpuload">100%</output>
+  </div>
+  <div class="controls">
+    <b class="tag">CPU</b>
+    <select id="cpumodel" aria-label="Modelo de CPU"></select>
+    <input type="number" id="cpuw" min="20" max="400" step="5" value="100" aria-label="Consumo del CPU en watts" hidden>
+    <select id="cooler" aria-label="Refrigeración del CPU">
+      <option value="stock">Disipador de fábrica</option>
+      <option value="tower1" selected>Torre, 1 ventilador</option>
+      <option value="tower2">Torre, 2 ventiladores (push-pull)</option>
+      <option value="aio">Refrigeración líquida (AIO)</option>
+    </select>
+    <label for="cpuload">Carga</label>
+    <input type="range" id="cpuload" min="0" max="100" step="5" value="100"><output id="cpuloadv" for="cpuload">100%</output>
+  </div>
+  <section class="curve">
+    <div class="curve-head"><b>Curva de ventiladores de la GPU</b><button id="curveReset">Restablecer curva</button></div>
+    <p class="sub">Arrastra los puntos: cada uno indica a qué velocidad (%) giran los ventiladores a esa temperatura. La línea punteada marca la temperatura actual de la GPU y el punto sobre esa línea, la velocidad real de los ventiladores.</p>
+    <canvas id="curve" width="480" height="240" aria-label="Curva de velocidad de los ventiladores de la GPU según la temperatura"></canvas>
+  </section>
+  <p class="sub">Los watts son el consumo aproximado de cada modelo a carga máxima. La líquida usa como radiador los ventiladores del techo (o los del frente si no hay en el techo).</p>
+  <div class="stat" id="stat"></div>
+  <div id="msg"></div>
+  <div class="legend">
+    <span class="scale">22 °C <i class="bar"></i> 95 °C <span>temperatura (aire y componentes)</span></span>
+    <span><i class="sw" style="background:#3aa0ff"></i>Ventilador de entrada</span>
+    <span><i class="sw" style="background:#ff6a3a"></i>Ventilador de salida</span>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
