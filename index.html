@@ -13,14 +13,17 @@
 <div class="wrap">
   <div class="head">
     <h1>Flujo de aire del gabinete</h1>
-    <div class="theme" role="group" aria-label="Tema">
-      <button type="button" data-theme-opt="light" aria-pressed="false">Claro</button>
-      <button type="button" data-theme-opt="dark" aria-pressed="false">Oscuro</button>
-      <button type="button" data-theme-opt="system" aria-pressed="true">Sistema</button>
+    <div class="head-actions">
+      <button type="button" id="helpOpen" class="help-btn">Ayuda</button>
+      <div class="theme" role="group" aria-label="Tema">
+        <button type="button" data-theme-opt="light" aria-pressed="false">Claro</button>
+        <button type="button" data-theme-opt="dark" aria-pressed="false">Oscuro</button>
+        <button type="button" data-theme-opt="system" aria-pressed="true">Sistema</button>
+      </div>
     </div>
   </div>
-  <p class="sub">Vista lateral. La GPU (diseño abierto) calienta el aire y lo dispersa por sus laterales y extremos dentro del gabinete. Puedes elegir el modelo de GPU y CPU, cuántos ventiladores tiene la GPU y cómo se refrigera el CPU. El CPU y la GPU toman el color de su temperatura, con la misma escala que el aire.
-    <b>Arrastra</b> un ventilador por las paredes para moverlo, <b>haz clic</b> para cambiar entre entrada y salida y <b>sácalo del gabinete</b> para eliminarlo.</p>
+  <p class="sub">Vista lateral de un gabinete de PC: los puntos son el aire, que cambia de color según su temperatura. Acomodá los ventiladores, elegí tu GPU, tu CPU y su refrigeración, y mirá cómo cambian la presión y las temperaturas.
+    ¿Primera vez? <button type="button" id="helpOpen2" class="link-btn">Abrí la ayuda</button> para ver cómo se usa.</p>
   <canvas id="c" width="900" height="560"></canvas>
   <div class="controls">
     <button id="addIn">+ Ventilador de entrada</button>
@@ -75,7 +78,7 @@
   </div>
   <section class="curve">
     <div class="curve-head"><b>Curva de ventiladores de la GPU</b><button id="curveReset">Restablecer curva</button></div>
-    <p class="sub">Arrastra los puntos: cada uno indica a qué velocidad (%) giran los ventiladores a esa temperatura. La línea punteada marca la temperatura actual de la GPU y el punto sobre esa línea, la velocidad real de los ventiladores.</p>
+    <p class="sub">Arrastrá los puntos: cada uno indica a qué velocidad (%) giran los ventiladores a esa temperatura. La línea punteada marca la temperatura actual de la GPU y el punto sobre esa línea, la velocidad real de los ventiladores.</p>
     <canvas id="curve" width="480" height="240" aria-label="Curva de velocidad de los ventiladores de la GPU según la temperatura"></canvas>
   </section>
   <p class="sub">Los watts son el consumo aproximado de cada modelo a carga máxima. La líquida usa como radiador los ventiladores del techo (o los del frente si no hay en el techo).</p>
@@ -95,6 +98,102 @@
     </p>
   </footer>
 </div>
+
+<dialog id="help" aria-labelledby="helpTitle">
+  <div class="help-head">
+    <h2 id="helpTitle">Cómo usar el simulador</h2>
+    <button type="button" id="helpClose" class="help-x" aria-label="Cerrar ayuda">✕</button>
+  </div>
+
+  <details open>
+    <summary>Primeros pasos</summary>
+    <p>Ves un gabinete de PC <b>de costado</b>. Los puntitos son el aire: entran por los ventiladores de entrada, pasan por la GPU y el CPU, se calientan y salen por los de salida. Su color indica la temperatura: <b>azul</b> frío, <b>verde</b> tibio, <b>amarillo</b> caliente y <b>rojo</b> muy caliente.</p>
+    <ol>
+      <li><b>Mové un ventilador:</b> agarralo con el mouse (o el dedo) y arrastralo por las paredes.</li>
+      <li><b>Elegí tu GPU y tu CPU</b> en las listas de abajo, y cómo se refrigera el CPU.</li>
+      <li><b>Mirá la línea de resumen</b>, debajo de la curva: muestra la presión y las temperaturas, y se actualiza sola.</li>
+    </ol>
+  </details>
+
+  <details>
+    <summary>Ventiladores del gabinete</summary>
+    <ul>
+      <li><b>Mover:</b> arrastrá un ventilador por las paredes (frente, techo, piso o pared trasera). Siempre queda pegado a la pared más cercana. No se puede poner donde está la fuente ni sobre las ranuras PCI de atrás.</li>
+      <li><b>Entrada o salida:</b> hacé <b>un clic</b> sobre el ventilador para invertirlo. <b>Azul</b> = entrada (mete aire). <b>Naranja</b> = salida (saca aire). La flecha muestra hacia dónde va el aire.</li>
+      <li><b>Eliminar:</b> arrastralo <b>afuera del gabinete</b>. Se pone gris y aparece «Soltá para eliminar».</li>
+      <li><b>Agregar:</b> «+ Ventilador de entrada» o «+ Ventilador de salida» lo ponen en el primer lugar libre. Después lo podés mover.</li>
+      <li><b>Restablecer</b> vuelve a 3 entradas al frente, 1 salida atrás y 2 en el techo.</li>
+      <li><b>Poner frente a la derecha/izquierda</b> da vuelta el dibujo, si tu gabinete tiene el frente del otro lado.</li>
+      <li>En el <b>celular</b> funciona igual, tocando y arrastrando con el dedo.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Gabinete y ambiente</summary>
+    <ul>
+      <li><b>Temperatura:</b> la del cuarto, de 15 a 40 °C. El aire entra a esa temperatura, así que todo se calienta o se enfría con ella.</li>
+      <li><b>Tamaño:</b> mini torre, media torre o torre completa. En «Personalizado» elegís profundidad y altura. Los ventiladores conservan su lugar relativo en cada pared; si alguno no entra, se quita y te avisa.</li>
+      <li><b>Tapas PCI traseras ventiladas:</b> son las plaquitas de atrás que se sacan al instalar una placa. Si tienen agujeros, el aire puede pasar por ahí: la GPU toma aire fresco de afuera o, con presión positiva, el aire que sobra se escapa por ellas.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>GPU y su curva</summary>
+    <ul>
+      <li><b>Modelo:</b> cada uno tiene su consumo en watts, que es lo que calienta. Si el tuyo no está, elegí «Otro» y escribí los watts.</li>
+      <li><b>Ventiladores:</b> 1, 2 o 3. Más ventiladores significa una tarjeta con un disipador más grande, que enfría mejor. «Encendidos» los apaga para ver qué pasa sin ellos.</li>
+      <li><b>Carga:</b> cuánto trabaja la GPU, de 0 % (en reposo) a 100 % (jugando al máximo).</li>
+      <li><b>Curva de ventiladores:</b> cada punto dice a qué velocidad giran los ventiladores a cierta temperatura. Arrastrá los puntos para cambiarla. La línea punteada es la temperatura actual de la GPU y el punto sobre ella, la velocidad real. «Restablecer curva» vuelve a la original.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>CPU y refrigeración</summary>
+    <ul>
+      <li><b>Modelo:</b> igual que la GPU, cada uno con su consumo; «Otro» para escribir los watts.</li>
+      <li><b>Refrigeración:</b>
+        <ul>
+          <li><b>Disipador de fábrica:</b> el que viene en la caja. Es chico y enfría poco.</li>
+          <li><b>Torre, 1 ventilador:</b> empuja el aire a través de las aletas, de adelante hacia atrás.</li>
+          <li><b>Torre, 2 ventiladores (push-pull):</b> uno empuja y otro tira del aire. Enfría mejor.</li>
+          <li><b>Líquida (AIO):</b> el calor viaja por mangueras hasta el radiador, que va en los ventiladores del techo (o en los del frente si no hay en el techo). Con el radiador al frente, el aire entra ya tibio al gabinete.</li>
+        </ul>
+      </li>
+      <li><b>Carga:</b> cuánto trabaja el CPU, de 0 % a 100 %.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Cómo leer la simulación</summary>
+    <ul>
+      <li><b>Colores:</b> el aire, el CPU y la GPU usan la misma escala, de 22 °C (azul) a 95 °C (rojo).</li>
+      <li><b>Presión:</b>
+        <ul>
+          <li><b>Positiva</b> (más entradas que salidas): el aire que sobra se escapa por las rendijas. Entra menos polvo, porque casi todo el aire pasa por los filtros.</li>
+          <li><b>Negativa</b> (más salidas que entradas): entra aire sin filtrar por las rendijas. Más polvo.</li>
+          <li><b>Neutra:</b> igual cantidad de entradas y salidas.</li>
+        </ul>
+      </li>
+      <li><b>Temperaturas:</b> son las del chip del CPU y de la GPU. A 95 °C o más dice <b>«al límite»</b>: en una PC real, el componente bajaría su velocidad para no recalentarse.</li>
+      <li><b>Aire de salida:</b> qué tan caliente sale el aire del gabinete.</li>
+      <li>Los valores son <b>estimaciones</b> para comparar configuraciones entre sí, no la temperatura exacta de tu PC.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Ideas para probar</summary>
+    <ul>
+      <li><b>Sacá las salidas del techo</b> (arrastralas afuera) y mirá cómo sube el CPU: el aire caliente de la GPU se queda dando vueltas arriba.</li>
+      <li><b>Invertí ventiladores hasta tener más salidas que entradas</b> y probá con las tapas PCI ventiladas y sin ventilar: fijate en la GPU.</li>
+      <li><b>Armá una curva silenciosa:</b> bajá los puntos de la curva y mirá cuántos grados de más cuesta el silencio.</li>
+      <li><b>Probá la refrigeración líquida</b> con el radiador en el techo y después al frente (dejá el techo sin ventiladores): compará la GPU.</li>
+      <li><b>Subí la temperatura del cuarto a 35 °C</b>, como en un verano sin aire acondicionado.</li>
+      <li><b>Compará tamaños:</b> pasá de mini torre a torre completa con la misma configuración.</li>
+    </ul>
+  </details>
+
+  <p class="help-foot">Lo que configurás se guarda en tu navegador. Para volver al inicio usá «Restablecer» y «Restablecer curva».</p>
+</dialog>
 <script src="app.js"></script>
 </body>
 </html>

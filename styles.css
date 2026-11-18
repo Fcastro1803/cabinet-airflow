@@ -50,3 +50,24 @@
   @keyframes tema-revelar { to { --tr:150vmax; } }
   /* etiqueta + deslizador + valor siempre juntos en la misma línea */
   .field { display:inline-flex; gap:6px; align-items:center; white-space:nowrap; }
+  /* Ayuda: botón en el encabezado y ventana con secciones desplegables */
+  .head-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .help-btn { font-size:13px; padding:5px 12px; }
+  .link-btn { border:0; background:none; padding:0; font:inherit; color:#3aa0ff; text-decoration:underline; text-underline-offset:2px; cursor:pointer; }
+  #help { width:min(640px, calc(100vw - 24px)); max-height:85vh; overflow:auto; padding:0 20px 16px; background:var(--panel); color:var(--ink); border:1px solid var(--line); border-radius:12px; }
+  #help::backdrop { background:rgb(0 0 0 / .55); }
+  .help-head { position:sticky; top:0; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px 0 10px; background:var(--panel); }
+  .help-head h2 { margin:0; font-size:17px; }
+  .help-x { font-size:15px; line-height:1; padding:6px 10px; }
+  #help details { border-top:1px solid var(--line); }
+  #help summary { cursor:pointer; padding:11px 0; font-weight:600; list-style:none; display:flex; align-items:center; gap:8px; }
+  #help summary::-webkit-details-marker { display:none; }
+  #help summary::before { content:"▸"; color:var(--mute); transition:transform .15s; }
+  #help details[open] > summary::before { transform:rotate(90deg); }
+  #help summary:focus-visible { outline:2px solid #3aa0ff; outline-offset:2px; border-radius:4px; }
+  #help details p, #help details ul, #help details ol { margin:0 0 12px; font-size:14px; line-height:1.5; }
+  #help details ul, #help details ol { padding-left:20px; }
+  #help details ul ul { margin:4px 0 0; }
+  #help li { margin-bottom:4px; }
+  .help-foot { margin:8px 0 0; padding-top:10px; border-top:1px solid var(--line); color:var(--mute); font-size:12.5px; }
+  @media (prefers-reduced-motion: reduce) { #help summary::before { transition:none; } }

@@ -516,7 +516,7 @@ function draw(){
     drawFan(f, WALLS[f.wall].v, del ? '#888' : f.mode==='in' ? IN : OUT, del ? 0.5 : 1);
     if(!del) drawArrow(f);
   }
-  if(drag?.del){ ctx.fillStyle = '#ff5a3a'; ctx.font = '13px system-ui'; label('Suelta para eliminar', drag.f.x+12, drag.f.y-12); }
+  if(drag?.del){ ctx.fillStyle = '#ff5a3a'; ctx.font = '13px system-ui'; label('Soltá para eliminar', drag.f.x+12, drag.f.y-12); }
   ctx.restore();
 }
 
@@ -617,4 +617,19 @@ loop();
     t.ready.catch(() => {}); t.finished.catch(() => {});
   }));
   mark();
+}
+
+// ---- ayuda ----
+// <dialog> nativo: showModal() maneja el foco y Esc lo cierra; acá se agrega el ✕ y el clic afuera.
+{
+  const help = document.getElementById('help');
+  const open = () => help.showModal();
+  document.getElementById('helpOpen').addEventListener('click', open);
+  document.getElementById('helpOpen2').addEventListener('click', open);
+  document.getElementById('helpClose').addEventListener('click', () => help.close());
+  // un clic en el fondo oscuro llega al propio <dialog>, no a su contenido
+  help.addEventListener('click', e => {
+    const r = help.getBoundingClientRect();
+    if(e.target === help && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) help.close();
+  });
 }
