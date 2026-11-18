@@ -23,4 +23,9 @@
   .legend { display:flex; gap:16px; font-size:13px; color:var(--mute); flex-wrap:wrap; }
   .scale { display:inline-flex; gap:6px; align-items:center; }
   .bar { display:inline-block; width:140px; height:8px; border-radius:4px; background:linear-gradient(90deg, hsl(210,95%,55%), hsl(129,95%,55%), hsl(48,95%,55%), hsl(4,95%,55%)); }
+  .footer { margin-top:24px; padding-top:12px; border-top:1px solid var(--line); color:var(--mute); font-size:12.5px; }
+  .footer p { margin:0 0 6px; }
+  .footer a { color:inherit; text-decoration:underline; text-underline-offset:2px; }
+  .footer a:hover { color:var(--ink); }
+  .footer a:focus-visible { outline:2px solid #3aa0ff; outline-offset:2px; border-radius:2px; }
   .sw { display:inline-block; width:22px; height:8px; border-radius:4px; vertical-align:middle; margin-right:6px; }
