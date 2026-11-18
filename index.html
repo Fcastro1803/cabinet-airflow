@@ -27,8 +27,11 @@
     <button id="addOut">+ Ventilador de salida</button>
     <button id="reset">Restablecer</button>
     <button id="flip">Poner frente a la derecha</button>
-    <label for="ambient">Temperatura ambiente</label>
-    <input type="range" id="ambient" min="15" max="40" step="1" value="22"><output id="ambientv" for="ambient">22 °C</output>
+  </div>
+  <div class="controls">
+    <b class="tag">Ambiente</b>
+    <span class="field"><label for="ambient">Temperatura</label>
+      <input type="range" id="ambient" min="15" max="40" step="1" value="22"><output id="ambientv" for="ambient">22 °C</output></span>
   </div>
   <div class="controls">
     <b class="tag">Gabinete</b>
@@ -54,8 +57,8 @@
       <option value="1">1 ventilador</option><option value="2" selected>2 ventiladores</option><option value="3">3 ventiladores</option>
     </select>
     <label><input type="checkbox" id="gpufans" checked> Encendidos</label>
-    <label for="gpuload">Carga</label>
-    <input type="range" id="gpuload" min="0" max="100" step="5" value="100"><output id="gpuloadv" for="gpuload">100%</output>
+    <span class="field"><label for="gpuload">Carga</label>
+      <input type="range" id="gpuload" min="0" max="100" step="5" value="100"><output id="gpuloadv" for="gpuload">100%</output></span>
   </div>
   <div class="controls">
     <b class="tag">CPU</b>
@@ -67,8 +70,8 @@
       <option value="tower2">Torre, 2 ventiladores (push-pull)</option>
       <option value="aio">Refrigeración líquida (AIO)</option>
     </select>
-    <label for="cpuload">Carga</label>
-    <input type="range" id="cpuload" min="0" max="100" step="5" value="100"><output id="cpuloadv" for="cpuload">100%</output>
+    <span class="field"><label for="cpuload">Carga</label>
+      <input type="range" id="cpuload" min="0" max="100" step="5" value="100"><output id="cpuloadv" for="cpuload">100%</output></span>
   </div>
   <section class="curve">
     <div class="curve-head"><b>Curva de ventiladores de la GPU</b><button id="curveReset">Restablecer curva</button></div>

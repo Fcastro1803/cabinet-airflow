@@ -48,3 +48,5 @@
     animation:tema-revelar .9s cubic-bezier(.7,0,.3,1) both;
   }
   @keyframes tema-revelar { to { --tr:150vmax; } }
+  /* etiqueta + deslizador + valor siempre juntos en la misma línea */
+  .field { display:inline-flex; gap:6px; align-items:center; white-space:nowrap; }
