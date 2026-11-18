@@ -71,3 +71,10 @@
   #help li { margin-bottom:4px; }
   .help-foot { margin:8px 0 0; padding-top:10px; border-top:1px solid var(--line); color:var(--mute); font-size:12.5px; }
   @media (prefers-reduced-motion: reduce) { #help summary::before { transition:none; } }
+  /* Ideas para probar: texto + botón por línea, y el aviso de qué mirar arriba del gabinete */
+  #help .tries { list-style:none; padding-left:0; }
+  #help .tries li { display:flex; gap:12px; align-items:center; justify-content:space-between; padding:6px 0; }
+  #help .tries li span { min-width:0; }
+  .try { flex:none; font-size:13px; padding:5px 12px; color:#fff; background:#2f7fd6; border-color:#2f7fd6; }
+  .try:hover { background:#3a8fe8; border-color:#3a8fe8; }
+  .try-msg { margin:0 0 10px; padding:10px 12px; border:1px solid #3aa0ff; border-radius:8px; background:var(--btn); color:var(--ink); font-size:14px; scroll-margin-top:12px; }

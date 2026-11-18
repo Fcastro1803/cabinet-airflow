@@ -24,6 +24,7 @@
   </div>
   <p class="sub">Vista lateral de un gabinete de PC: los puntos son el aire, que cambia de color según su temperatura. Acomodá los ventiladores, elegí tu GPU, tu CPU y su refrigeración, y mirá cómo cambian la presión y las temperaturas.
     ¿Primera vez? <button type="button" id="helpOpen2" class="link-btn">Abrí la ayuda</button> para ver cómo se usa.</p>
+  <p id="tryMsg" class="try-msg" role="status" hidden></p>
   <canvas id="c" width="900" height="560"></canvas>
   <div class="controls">
     <button id="addIn">+ Ventilador de entrada</button>
@@ -182,17 +183,18 @@
 
   <details>
     <summary>Ideas para probar</summary>
-    <ul>
-      <li><b>Sacá las salidas del techo</b> (arrastralas afuera) y mirá cómo sube el CPU: el aire caliente de la GPU se queda dando vueltas arriba.</li>
-      <li><b>Invertí ventiladores hasta tener más salidas que entradas</b> y probá con las tapas PCI ventiladas y sin ventilar: fijate en la GPU.</li>
-      <li><b>Armá una curva silenciosa:</b> bajá los puntos de la curva y mirá cuántos grados de más cuesta el silencio.</li>
-      <li><b>Probá la refrigeración líquida</b> con el radiador en el techo y después al frente (dejá el techo sin ventiladores): compará la GPU.</li>
-      <li><b>Subí la temperatura del cuarto a 35 °C</b>, como en un verano sin aire acondicionado.</li>
-      <li><b>Compará tamaños:</b> pasá de mini torre a torre completa con la misma configuración.</li>
+    <p>Cada botón parte de la configuración inicial (con tu GPU y tu CPU), cambia una sola cosa y te muestra qué mirar arriba del gabinete.</p>
+    <ul class="tries">
+      <li><span><b>Sin salidas en el techo:</b> el aire caliente de la GPU se queda dando vueltas arriba, alrededor del CPU.</span> <button type="button" class="try" data-try="sin-techo">Probar</button></li>
+      <li><span><b>Presión negativa:</b> más salidas que entradas, con las tapas PCI cerradas. Después abrilas y compará la GPU.</span> <button type="button" class="try" data-try="presion-negativa">Probar</button></li>
+      <li><span><b>Curva silenciosa:</b> los ventiladores de la GPU giran más lento. ¿Cuántos grados cuesta el silencio?</span> <button type="button" class="try" data-try="curva-silenciosa">Probar</button></li>
+      <li><span><b>Líquida con el radiador al frente:</b> el aire entra al gabinete ya tibio. Compará la GPU con el radiador en el techo.</span> <button type="button" class="try" data-try="liquida-frente">Probar</button></li>
+      <li><span><b>Verano sin aire acondicionado:</b> el cuarto a 35 °C.</span> <button type="button" class="try" data-try="cuarto-35">Probar</button></li>
+      <li><span><b>Mini torre:</b> la misma configuración en un gabinete más chico. Compará con la torre completa.</span> <button type="button" class="try" data-try="mini-torre">Probar</button></li>
     </ul>
   </details>
 
-  <p class="help-foot">Lo que configurás se guarda en tu navegador. Para volver al inicio usá «Restablecer» y «Restablecer curva».</p>
+  <p class="help-foot">Lo que configurás se guarda en tu navegador. «Restablecer» vuelve los ventiladores a su lugar inicial y «Restablecer curva», la curva de la GPU; lo demás se cambia desde su propio control.</p>
 </dialog>
 <script src="app.js"></script>
 </body>

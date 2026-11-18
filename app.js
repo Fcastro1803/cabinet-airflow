@@ -633,3 +633,58 @@ loop();
     if(e.target === help && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) help.close();
   });
 }
+
+// ---- ideas para probar: cada botón arma la situación y dice qué mirar ----
+// Reusa las mismas funciones y eventos que los controles de la página (load, addFan, eventos change/input).
+{
+  const help = document.getElementById('help');
+  const msg = document.getElementById('tryMsg');
+  const setVal = (id, v, ev) => { const el = document.getElementById(id); el.value = v; if(ev) el.dispatchEvent(new Event(ev)); };
+  const noTop = () => defaultFans().filter(f => f.wall !== 'top');
+  // Cada idea parte de la configuración inicial (respetando la GPU, el CPU y sus cargas) y cambia una sola cosa,
+  // así una prueba no arrastra cambios de la anterior y la comparación es justa.
+  function baseline(){
+    if(val('casesize') !== 'mid') setVal('casesize', 'mid', 'change');
+    setVal('ambient', 22, 'input');
+    setVal('cooler', 'tower1');
+    document.getElementById('pcivent').checked = true;
+    curve = CURVE_DEFAULT.map(q => [...q]); try{ localStorage.removeItem(CURVE_KEY); }catch(e){}
+    load(defaultFans()); save();
+  }
+  const TRIES = {
+    'sin-techo': {
+      run(){ load(noTop()); save(); },
+      msg: 'Sin salidas en el techo: mirá cómo sube la temperatura del CPU en la línea de resumen y cómo el aire caliente se acumula arriba.',
+    },
+    'presion-negativa': {
+      run(){ const d = defaultFans(); load([d[0], d[1], d[3], d[4], d[5]]); addFan('out'); document.getElementById('pcivent').checked = false; },
+      msg: 'Presión negativa (2 entradas, 4 salidas) con las tapas PCI cerradas: mirá la GPU. Después marcá «Tapas PCI traseras ventiladas» y compará.',
+    },
+    'curva-silenciosa': {
+      run(){ curve = [[30,0],[60,0],[70,25],[80,40],[90,60]]; try{ localStorage.setItem(CURVE_KEY, JSON.stringify(curve)); }catch(e){} },
+      msg: 'Curva silenciosa: los ventiladores de la GPU giran más lento. Mirá cuánto sube la GPU; «Restablecer curva» vuelve a la original.',
+    },
+    'liquida-frente': {
+      run(){ setVal('cooler', 'aio'); load(noTop()); save(); },
+      msg: 'Líquida con el radiador al frente: el aire entra tibio y la GPU recibe aire más caliente. Tocá «Restablecer» para ponerlo en el techo y comparar.',
+    },
+    'cuarto-35': {
+      run(){ setVal('ambient', 35, 'input'); },
+      msg: 'Cuarto a 35 °C: el aire ya entra verde y todo se calienta. Mirá cómo aceleran los ventiladores de la GPU para compensar.',
+    },
+    'mini-torre': {
+      run(){ setVal('casesize', 'mini', 'change'); },
+      msg: 'Mini torre: anotá las temperaturas y después elegí «Torre completa» en la lista Gabinete para comparar.',
+    },
+  };
+  let msgTimer;
+  document.querySelectorAll('[data-try]').forEach(b => b.addEventListener('click', () => {
+    const t = TRIES[b.dataset.try];
+    baseline(); t.run();
+    help.close();
+    msg.textContent = t.msg; msg.hidden = false;
+    clearTimeout(msgTimer); msgTimer = setTimeout(() => msg.hidden = true, 15000);
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    msg.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block: 'start'});
+  }));
+}
